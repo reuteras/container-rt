@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:12-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${POSTGRES_DB_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_DB_PASS}
+      - POSTGRES_DB=postgres
+      - RT_USER=${RT_DB_USER}
+      - RT_PASSWORD=${RT_DB_PASS}
+      - RT_POSTGRES_DB=${RT_DB_NAME}
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  rt:
+    #    image: reuteras/docker-rt:latest
+    image: docker-rt-test
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "443:443"
+    volumes:
+      - ./files:/data:ro
+      - ./entrypoint.sh:/entrypoint.sh:ro
+    depends_on:
+      - db
+
+#  backups:
+#    build:
+#      context:
+#        ./app
+#    restart: unless-stopped
+#    env_file:
+#      - .env
+#    volumes:
+#      - backups:/backups
+#      - app:/var/www/html
+#    depends_on:
+#      - db
+#    command: /opt/tt-rss/dcron.sh -f
+
+volumes:
+  db:
+  app:
+#  backups:
