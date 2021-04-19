@@ -88,7 +88,7 @@ RUN chmod +x /entrypoint.sh && \
     ln -s /data/server.pem /etc/lighttpd/server.pem && \
     touch /var/run/lighttpd.pid && \
     chown rt-service:rt-service /var/run/lighttpd.pid && \
-    chown -R rt-service:rt-service /var/log/lighttpd/ && \
+    chown -R rt-service:rt-service /var/log/lighttpd /var/cache/lighttpd && \
     chown -R rt-service:rt-service /opt/rt5
 
 EXPOSE 443
