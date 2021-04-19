@@ -1,7 +1,7 @@
 # Ignore production settings
-.env
-files/*.pem
-files/RT_SiteConfig.pm
+rt/.env
+rt/files/*.pem
+rt/files/RT_SiteConfig.pm
 # Ignore all dev settings
-.env-dev
-files-dev
+rt/.env-dev
+rt/files-dev
