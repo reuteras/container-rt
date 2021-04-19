@@ -16,7 +16,11 @@ In this first build this container makes some assumptions that might not be for 
 
 ## TODO
 
-Lots of things.
-
-* Instruction for adding plugins.
-
+- Instruction for adding plugins.
+- Backups? https://docs.bestpractical.com/rt/5.0.1/system_administration/database.html
+- Automation? https://docs.bestpractical.com/rt/5.0.1/automating_rt.html
+- Config? https://docs.bestpractical.com/rt/5.0.1/RT_Config.html
+- Upgrade DB? https://docs.bestpractical.com/rt/5.0.1/UPGRADING-5.0.html
+- Styling? https://docs.bestpractical.com/rt/5.0.1/customizing/styling_rt.html
+- Security? https://docs.bestpractical.com/rt/5.0.1/security.html
+- 
