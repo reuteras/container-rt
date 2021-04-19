@@ -13,8 +13,8 @@ dev-clean:
 
 dev-build: build
 build:
-	docker build --tag=docker-rt-test .
+	docker build --tag=docker-rt-test rt
 
 dev-no-cache-build: no-cache-build
 no-cache-build:
-	docker build --tag=docker-rt-test --no-cache .
+	docker build --tag=docker-rt-test --no-cache rt
