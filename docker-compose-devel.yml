@@ -19,12 +19,12 @@ services:
     image: docker-rt-test
     restart: unless-stopped
     env_file:
-      - .env-dev
+      - rt/.env-dev
     ports:
       - "443:443"
     volumes:
-      - ./files-dev:/data:ro
-      - ./entrypoint.sh:/entrypoint.sh:ro
+      - ./rt/files-dev:/data:ro
+      - ./rt/entrypoint.sh:/entrypoint.sh:ro
     depends_on:
       - db
 
