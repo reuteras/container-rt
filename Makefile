@@ -3,8 +3,20 @@ all: up
 up:
 	docker compose up
 
+down:
+	docker compose down
+
+rm:
+	docker compose rm
+
 dev-up:
 	docker compose -f docker-compose-devel.yml -p container-rt-dev up
+
+dev-down:
+	docker compose -f docker-compose-devel.yml -p container-rt-dev down
+
+dev-rm:
+	docker compose -f docker-compose-devel.yml -p container-rt-dev rm
 
 dev-clean:
 	docker compose -f docker-compose-devel.yml -p container-rt-dev stop 
