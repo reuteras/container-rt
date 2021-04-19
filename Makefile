@@ -3,11 +3,18 @@ all: up
 up:
 	docker compose up
 
-dev-clean:
-	docker compose stop && docker compose rm --force && docker volume rm container-rt_db container-rt_app
+dev-up:
+	docker compose -f docker-compose-devel.yml -p container-rt-dev up
 
-dev-build:
+dev-clean:
+	docker compose -f docker-compose-devel.yml -p container-rt-dev stop 
+	docker compose -f docker-compose-devel.yml -p container-rt-dev rm --force
+	docker volume rm container-rt-dev_db container-rt-dev_app
+
+dev-build: build
+build:
 	docker build --tag=docker-rt-test .
 
-dev-no-cache-build:
+dev-no-cache-build: no-cache-build
+no-cache-build:
 	docker build --tag=docker-rt-test --no-cache .
