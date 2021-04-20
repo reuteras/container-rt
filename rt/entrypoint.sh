@@ -1,14 +1,12 @@
 #!/bin/bash
 
-if [[ -z  "$RT_HOSTNAME" ]]; then
-    echo >&2 "You must specify RT_HOSTNAME."
-    exit 1
-fi
-
-if [[ -z  "$RT_RELAYHOST" ]]; then
-    echo >&2 "You must specify RT_RELAYHOST."
-    exit 1
-fi
+for variable in POSTGRES_USER POSTGRES_PASSWORD RT_DB_HOST RT_USER RT_PASSWORD \
+    RT_DB_NAME RT_DB_PORT RT_HOSTNAME RT_RELAYHOST ; do
+    if [[ -z  "${!variable}" ]]; then
+        echo >&2 "You must specify \$$variable."
+        exit 1
+    fi
+done
 
 cp /etc/lighttpd/conf-available/89-rt.conf /tmp/89-rt.conf
 sed -i -e "s=HOSTNAME=$RT_HOSTNAME=" /tmp/89-rt.conf
@@ -16,8 +14,8 @@ cat /tmp/89-rt.conf > /etc/lighttpd/conf-available/89-rt.conf
 
 sed -i -e "s=RT_DB_HOST=$RT_DB_HOST=" /opt/rt5/etc/RT_SiteConfig.pm
 sed -i -e "s=RT_DB_PORT=$RT_DB_PORT=" /opt/rt5/etc/RT_SiteConfig.pm
-sed -i -e "s=RT_DB_USER=$RT_DB_USER=" /opt/rt5/etc/RT_SiteConfig.pm
-sed -i -e "s=RT_DB_PASS=$RT_DB_PASS=" /opt/rt5/etc/RT_SiteConfig.pm
+sed -i -e "s=RT_DB_USER=$RT_USER=" /opt/rt5/etc/RT_SiteConfig.pm
+sed -i -e "s=RT_DB_PASS=$RT_PASSWORD=" /opt/rt5/etc/RT_SiteConfig.pm
 
 while ! pg_isready -q -h "$RT_DB_HOST" ; do
     echo "Waiting for database on $RT_DB_HOST to be ready."
@@ -25,8 +23,11 @@ while ! pg_isready -q -h "$RT_DB_HOST" ; do
 done
 
 if ! PGPASSWORD="$RT_DB_PASS" psql -h "$RT_DB_HOST" -U "$RT_DB_USER" -lqt | cut -d \| -f 1 | grep -qw rtdb ; then
-    echo "setup db"
-    /opt/rt5/sbin/rt-setup-database --dba=postgres --dba-password=postgres --action init 
+    echo "Setup database"
+    /opt/rt5/sbin/rt-setup-database --dba="$POSTGRES_USER" --dba-password="$POSTGRES_PASSWORD" --action init 
+else
+    echo "Check if database needs an upgrade."
+    # /opt/rt5/sbin/rt-setup-database --action upgrade --dba="$POSTGRES_USER" --dba-password="$POSTGRES_PASSWORD"
 fi
 
 exec "$@"
