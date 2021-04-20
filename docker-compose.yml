@@ -4,13 +4,8 @@ services:
   db:
     image: postgres:12-alpine
     restart: unless-stopped
-    environment:
-      - POSTGRES_USER=${POSTGRES_DB_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_DB_PASS}
-      - POSTGRES_DB=postgres
-      - RT_USER=${RT_DB_USER}
-      - RT_PASSWORD=${RT_DB_PASS}
-      - RT_POSTGRES_DB=${RT_DB_NAME}
+    env_file:
+      - rt/.env
     volumes:
       - db:/var/lib/postgresql/data
 
