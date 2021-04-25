@@ -24,6 +24,7 @@ RUN apt update -yqq && \
         libgd-dev \
         libssl-dev \
         lighttpd \
+        mailutils \
         msmtp \
         openssl \
         perl \
