@@ -96,7 +96,10 @@ RUN chmod +x /entrypoint.sh && \
     chown rt-service:rt-service /var/run/lighttpd.pid && \
     chown -R rt-service:rt-service /var/log/lighttpd /var/cache/lighttpd && \
     chown -R rt-service:rt-service /opt/rt5 && \
-    echo "host mx-2.reuteras.com" > /etc/msmtprc
+    echo "default" > /etc/msmtprc && \
+    echo "host mx-2.reuteras.com" >> /etc/msmtprc && \
+    echo "from root@reuteras.com" >> /etc/msmtprc && \
+    echo "domain reuteras.com" >> /etc/msmtprc
 
 EXPOSE 443
 USER rt-service
