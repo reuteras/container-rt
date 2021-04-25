@@ -27,6 +27,7 @@ RUN apt update -yqq && \
         openssl \
         perl \
         postgresql-client \
+        sendmail \
         ssl-cert && \
 # Create user and group
     groupadd -r rt-service && \
