@@ -13,7 +13,7 @@ sed -i -e "s=HOSTNAME=$RT_HOSTNAME=" /tmp/89-rt.conf
 cat /tmp/89-rt.conf > /etc/lighttpd/conf-available/89-rt.conf
 rm -f /tmp/89-rt.conf
 
-copy /etc/msmtprc /tmp/msmtprc
+cp /etc/msmtprc /tmp/msmtprc
 sed -i -e "s=RT_RELAYHOST=$RT_RELAYHOST=" /tmp/msmtprc
 sed -i -e "s=RT_SENDER=$RT_SENDER=" /tmp/msmtprc
 sed -i -e "s=RT_DOMAIN=$RT_DOMAIN=" /tmp/msmtprc
