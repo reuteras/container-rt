@@ -11,11 +11,7 @@ done
 cp /etc/lighttpd/conf-available/89-rt.conf /tmp/89-rt.conf
 sed -i -e "s=HOSTNAME=$RT_HOSTNAME=" /tmp/89-rt.conf
 cat /tmp/89-rt.conf > /etc/lighttpd/conf-available/89-rt.conf
-
-sed -i -e "s=RT_DB_HOST=$RT_DB_HOST=" /opt/rt5/etc/RT_SiteConfig.pm
-sed -i -e "s=RT_DB_PORT=$RT_DB_PORT=" /opt/rt5/etc/RT_SiteConfig.pm
-sed -i -e "s=RT_DB_USER=$RT_USER=" /opt/rt5/etc/RT_SiteConfig.pm
-sed -i -e "s=RT_DB_PASS=$RT_PASSWORD=" /opt/rt5/etc/RT_SiteConfig.pm
+rm -f /tmp/89-rt.conf
 
 while ! pg_isready -q -h "$RT_DB_HOST" ; do
     echo "Waiting for database on $RT_DB_HOST to be ready."
