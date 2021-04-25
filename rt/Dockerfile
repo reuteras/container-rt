@@ -24,10 +24,10 @@ RUN apt update -yqq && \
         libgd-dev \
         libssl-dev \
         lighttpd \
+        msmtp \
         openssl \
         perl \
         postgresql-client \
-        sendmail \
         ssl-cert && \
 # Create user and group
     groupadd -r rt-service && \
@@ -94,7 +94,8 @@ RUN chmod +x /entrypoint.sh && \
     touch /var/run/lighttpd.pid && \
     chown rt-service:rt-service /var/run/lighttpd.pid && \
     chown -R rt-service:rt-service /var/log/lighttpd /var/cache/lighttpd && \
-    chown -R rt-service:rt-service /opt/rt5
+    chown -R rt-service:rt-service /opt/rt5 && \
+    echo "host mx-2.reuteras.com" > /etc/msmtprc
 
 EXPOSE 443
 USER rt-service
