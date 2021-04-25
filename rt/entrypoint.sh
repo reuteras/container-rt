@@ -13,9 +13,12 @@ sed -i -e "s=HOSTNAME=$RT_HOSTNAME=" /tmp/89-rt.conf
 cat /tmp/89-rt.conf > /etc/lighttpd/conf-available/89-rt.conf
 rm -f /tmp/89-rt.conf
 
-sed -i -e "s=RT_RELAYHOST=$RT_RELAYHOST=" /etc/msmtprc
-sed -i -e "s=RT_SENDER=$RT_SENDER=" /etc/msmtprc
-sed -i -e "s=RT_DOMAIN=$RT_DOMAIN=" /etc/msmtprc
+copy /etc/msmtprc /tmp/msmtprc
+sed -i -e "s=RT_RELAYHOST=$RT_RELAYHOST=" /tmp/msmtprc
+sed -i -e "s=RT_SENDER=$RT_SENDER=" /tmp/msmtprc
+sed -i -e "s=RT_DOMAIN=$RT_DOMAIN=" /tmp/msmtprc
+cat /tmp/msmtprc > /etc/msmtprc
+rm -f /tmp/msmtprc
 
 while ! pg_isready -q -h "$RT_DB_HOST" ; do
     echo "Waiting for database on $RT_DB_HOST to be ready."
