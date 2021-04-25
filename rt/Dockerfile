@@ -76,6 +76,10 @@ COPY 89-rt.conf /etc/lighttpd/conf-available/89-rt.conf
 RUN chmod +x /entrypoint.sh && \
     sed -i '6 a ssl.ca-file = "/etc/lighttpd/server-chain.pem"' \
         /etc/lighttpd/conf-available/10-ssl.conf && \
+    sed -iE 's/= 80/= 8080/' \
+        /etc/lighttpd/lighttpd.conf && \
+    sed -iE 's/:443/:8443/' \
+        /etc/lighttpd/conf-available/10-ssl.conf && \
     /usr/sbin/lighty-enable-mod rt && \
     /usr/sbin/lighty-enable-mod ssl && \
     chmod 770 /opt/rt5/etc && \
