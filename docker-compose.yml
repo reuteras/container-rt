@@ -15,7 +15,7 @@ services:
     env_file:
       - rt/.env
     ports:
-      - "8443:443"
+      - "443:8443"
     volumes:
       - ./rt/files:/data:ro
     depends_on:
