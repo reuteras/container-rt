@@ -9,6 +9,9 @@ down:
 rm:
 	docker compose rm
 
+pull:
+	docker pull reuteras/container-rt
+
 dev-up:
 	docker compose -f docker-compose-devel.yml -p container-rt-dev up
 

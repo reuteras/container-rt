@@ -10,7 +10,6 @@ services:
       - db:/var/lib/postgresql/data
 
   rt:
-    #    image: reuteras/docker-rt:latest
     image: docker-rt-test
     restart: unless-stopped
     env_file:

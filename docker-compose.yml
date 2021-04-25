@@ -10,8 +10,7 @@ services:
       - db:/var/lib/postgresql/data
 
   rt:
-    #    image: reuteras/docker-rt:latest
-    image: docker-rt-test
+    image: reuteras/container-rt:latest
     restart: unless-stopped
     env_file:
       - rt/.env
@@ -19,7 +18,6 @@ services:
       - "443:443"
     volumes:
       - .rt/files:/data:ro
-      - .rt/entrypoint.sh:/entrypoint.sh:ro
     depends_on:
       - db
 
