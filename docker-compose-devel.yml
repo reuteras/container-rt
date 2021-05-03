@@ -15,7 +15,7 @@ services:
     env_file:
       - rt/.env-dev
     ports:
-      - "443:443"
+      - "443:8443"
     volumes:
       - ./rt/files-dev:/data:ro
       - ./rt/entrypoint.sh:/entrypoint.sh:ro
