@@ -14,6 +14,7 @@ RUN apt update -yqq && \
         certbot \
         cpanminus \
         curl \
+        dnsutils \
         elinks \
         git \
         gpgv2 \
