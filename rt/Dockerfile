@@ -11,6 +11,7 @@ RUN apt update -yqq && \
     apt install -yqq --no-install-recommends \
         build-essential \
         ca-certificates \
+        certbot \
         cpanminus \
         curl \
         elinks \
