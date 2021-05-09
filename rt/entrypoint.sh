@@ -34,22 +34,24 @@ else
     # /opt/rt5/sbin/rt-setup-database --action upgrade --dba="$POSTGRES_USER" --dba-password="$POSTGRES_PASSWORD"
 fi
 
-DNS_IP=""
-EXT_IP=""
+if [ ! -e "/etc/letsencrypt/live/$RT_HOSTNAME/privkey.pem" ]; then
+    DNS_IP=""
+    EXT_IP=""
 
-while [[ $EXT_IP == "" ]] ; do
-    EXT_IP=$(curl -s https://icanhazip.com)
-done
+    while [[ $EXT_IP == "" ]] ; do
+        EXT_IP=$(curl -s https://icanhazip.com)
+    done
 
-DNS_IP=$(dig @8.8.8.8 "$RT_HOSTNAME" | grep -v ';' | grep -v CNAME | grep A | awk '{print $5}')
-while [[ $EXT_IP != "$DNS_IP" ]]; do
-    sleep 30
     DNS_IP=$(dig @8.8.8.8 "$RT_HOSTNAME" | grep -v ';' | grep -v CNAME | grep A | awk '{print $5}')
-done
+    while [[ $EXT_IP != "$DNS_IP" ]]; do
+        sleep 30
+        DNS_IP=$(dig @8.8.8.8 "$RT_HOSTNAME" | grep -v ';' | grep -v CNAME | grep A | awk '{print $5}')
+    done
 
-certbot certonly --standalone -m "$RT_SENDER" --agree-tos --no-eff-email -d "$RT_HOSTNAME","$HOSTNAME" --force-renewal --non-interactive
+    certbot certonly --standalone -m "$RT_SENDER" --agree-tos --no-eff-email -d "$RT_HOSTNAME","$HOSTNAME" --force-renewal --non-interactive
+fi
 
-ln -s "/etc/letsencrypt/live/$RT_HOSTNAME/fullchain.pem" /etc/lighttpd/certs/server-chain.pem
-ln -s "/etc/letsencrypt/live/$RT_HOSTNAME/privkey.pem" /etc/lighttpd/certs/server.pem
+[[ ! -e /etc/lighttpd/certs/server-chain.pem ]] && ln -s "/etc/letsencrypt/live/$RT_HOSTNAME/fullchain.pem" /etc/lighttpd/certs/server-chain.pem
+[[ ! -e /etc/lighttpd/certs/server.pem ]] && ln -s "/etc/letsencrypt/live/$RT_HOSTNAME/privkey.pem" /etc/lighttpd/certs/server.pem
 
 exec "$@"
