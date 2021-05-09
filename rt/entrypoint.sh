@@ -49,4 +49,7 @@ done
 
 certbot certonly --standalone -m "$RT_SENDER" --agree-tos --no-eff-email -d "$RT_HOSTNAME","$HOSTNAME" --force-renewal --non-interactive
 
+ln -s "/etc/letsencrypt/live/$RT_HOSTNAME/fullchain.pem" /etc/lighttpd/certs/server-chain.pem
+ln -s "/etc/letsencrypt/live/$RT_HOSTNAME/privkey.pem" /etc/lighttpd/certs/server.pem
+
 exec "$@"

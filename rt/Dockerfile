@@ -91,8 +91,11 @@ RUN chmod +x /entrypoint.sh && \
     chmod 0770 /opt/rt5/var && \
     chmod 0775 /etc/lighttpd/conf-available/89-rt.conf && \
     chown rt-service:rt-service /etc/lighttpd/conf-available/89-rt.conf && \
-    ln -s /data/server-chain.pem /etc/lighttpd/server-chain.pem &&  \
-    ln -s /data/server.pem /etc/lighttpd/server.pem && \
+    mkdir /etc/lighttpd/certs && \
+    chown rt-service:rt-service /etc/lighttpd/certs && \
+    chown -R rt-service:rt-service /etc/letsencrypt && \
+    ln -s /etc/lighttpd/certs/server-chain.pem /etc/lighttpd/server-chain.pem &&  \
+    ln -s /etc/lighttpd/certs/server.pem /etc/lighttpd/server.pem && \
     touch /var/run/lighttpd.pid && \
     chown rt-service:rt-service /var/run/lighttpd.pid && \
     chown -R rt-service:rt-service /var/log/lighttpd /var/cache/lighttpd && \
