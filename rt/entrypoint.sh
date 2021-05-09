@@ -34,4 +34,19 @@ else
     # /opt/rt5/sbin/rt-setup-database --action upgrade --dba="$POSTGRES_USER" --dba-password="$POSTGRES_PASSWORD"
 fi
 
+DNS_IP=""
+EXT_IP=""
+
+while [[ $EXT_IP == "" ]] ; do
+    EXT_IP=$(curl -s https://icanhazip.com)
+done
+
+DNS_IP=$(getent hosts "$RT_HOSTNAME" | awk '{print $1}')
+while [[ $EXT_IP != "$DNS_IP" ]]; do
+    sleep 30
+    DNS_IP=$(getent hosts "$RT_HOSTNAME" | awk '{print $1}')
+done
+
+certbot certonly --standalone -m "$RT_SENDER" --agree-tos --no-eff-email -d "$RT_HOSTNAME","$HOSTNAME" --force-renewal --non-interactive
+
 exec "$@"
