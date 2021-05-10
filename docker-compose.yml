@@ -23,6 +23,17 @@ services:
     depends_on:
       - db
 
+  cron:
+    build:
+      context:
+        ./cron
+    restart: unless-stopped
+    volumes:
+      - cert:/etc/letsencrypt
+    depends_on:
+      - db
+      - rt
+
 volumes:
   db:
   cert:
