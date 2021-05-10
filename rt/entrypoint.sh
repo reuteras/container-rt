@@ -50,7 +50,7 @@ if [ ! -e "/etc/letsencrypt/live/$RT_HOSTNAME/privkey.pem" ]; then
         DNS_IP=$(dig @8.8.8.8 "$RT_HOSTNAME" | grep -v ';' | grep -v CNAME | grep A | awk '{print $5}')
     done
 
-    certbot certonly --standalone -m "$RT_SENDER" --agree-tos --no-eff-email -d "$RT_CERT_NAME" --force-renewal --non-interactive
+    certbot certonly --standalone -m "$RT_SENDER" --agree-tos --no-eff-email -d "$RT_CERT_NAME" --force-renewal --non-interactive --http-01-port 8080
 fi
 
 [[ ! -e /etc/lighttpd/certs/server-chain.pem ]] && ln -s "/etc/letsencrypt/live/$RT_HOSTNAME/fullchain.pem" /etc/lighttpd/certs/server-chain.pem
