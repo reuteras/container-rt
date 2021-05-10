@@ -8,19 +8,27 @@ for variable in POSTGRES_USER POSTGRES_PASSWORD RT_DB_HOST RT_USER RT_PASSWORD \
     fi
 done
 
-cp /etc/lighttpd/conf-available/89-rt.conf /tmp/89-rt.conf
-sed -i -e "s=HOSTNAME=$RT_HOSTNAME=" /tmp/89-rt.conf
-cat /tmp/89-rt.conf > /etc/lighttpd/conf-available/89-rt.conf
-rm -f /tmp/89-rt.conf
+if ! grep "$RT_HOSTNAME" /etc/lighttpd/conf-available/89-rt.conf > /dev/null ; then
+    cp /etc/lighttpd/conf-available/89-rt.conf /tmp/89-rt.conf
+    sed -i -e "s=HOSTNAME=$RT_HOSTNAME=" /tmp/89-rt.conf
+    cat /tmp/89-rt.conf > /etc/lighttpd/conf-available/89-rt.conf
+    rm -f /tmp/89-rt.conf
+fi
 
 if ! grep "/etc/letsencrypt/live/$RT_HOSTNAME/fullchain.pem" /etc/lighttpd/conf-available/10-ssl.conf > /dev/null ; then
+    cp /etc/lighttpd/conf-available/10-ssl.conf /tmp/10-ssl.conf
     sed -i "6 a ssl.ca-file = \"/etc/letsencrypt/live/$RT_HOSTNAME/fullchain.pem\"" \
-        /etc/lighttpd/conf-available/10-ssl.conf
+        /tmp/10-ssl.conf
+    cat /tmp/10-ssl.conf > /etc/lighttpd/conf-available/10-ssl.conf
+    rm -f /tmp/10-ssl.conf
 fi
 
 if ! grep "/etc/letsencrypt/live/$RT_HOSTNAME/privkey.pem" /etc/lighttpd/conf-available/10-ssl.conf > /dev/null ; then
+    cp /etc/lighttpd/conf-available/10-ssl.conf /tmp/10-ssl.conf
     sed -i "s#/etc/lighttpd/server.pem#/etc/letsencrypt/live/$RT_HOSTNAME/privkey.pem#" \
-        /etc/lighttpd/conf-available/10-ssl.conf
+        /tmp/10-ssl.conf
+    cat /tmp/10-ssl.conf > /etc/lighttpd/conf-available/10-ssl.conf
+    rm -f /tmp/10-ssl.conf
 fi
 
 if ! grep "$RT_RELAYHOST" /etc/msmtprc > /dev/null ; then

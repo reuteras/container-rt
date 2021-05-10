@@ -90,6 +90,7 @@ RUN chmod +x /entrypoint.sh && \
     chmod 0770 /opt/rt5/var && \
     chmod 0644 /etc/lighttpd/conf-available/89-rt.conf && \
     chown rt-service:rt-service /etc/lighttpd/conf-available/89-rt.conf && \
+    chown rt-service:rt-service /etc/lighttpd/conf-available/10-ssl.conf && \
     chown -R rt-service:rt-service /etc/letsencrypt && \
     mkdir -p /var/log/letsencrypt /var/lib/letsencrypt && \
     chown -R rt-service:rt-service /var/log/letsencrypt /var/lib/letsencrypt && \
