@@ -29,8 +29,6 @@ if ! grep "/etc/letsencrypt/live/$RT_HOSTNAME/server.pem" /etc/lighttpd/conf-ava
         /tmp/10-ssl.conf
     cat /tmp/10-ssl.conf > /etc/lighttpd/conf-available/10-ssl.conf
     rm -f /tmp/10-ssl.conf
-    cat "/etc/letsencrypt/live/$RT_HOSTNAME/cert.pem" "/etc/letsencrypt/live/$RT_HOSTNAME/privkey.pem" > \
-        "/etc/letsencrypt/live/$RT_HOSTNAME/server.pem"
 fi
 
 if ! grep "$RT_RELAYHOST" /etc/msmtprc > /dev/null ; then
@@ -71,6 +69,8 @@ if [ ! -e "/etc/letsencrypt/live/$RT_HOSTNAME/privkey.pem" ]; then
     done
 
     certbot certonly --standalone -m "$RT_SENDER" --agree-tos --no-eff-email -d "$RT_CERT_NAME" --force-renewal --non-interactive --http-01-port 8080
+    cat "/etc/letsencrypt/live/$RT_HOSTNAME/cert.pem" "/etc/letsencrypt/live/$RT_HOSTNAME/privkey.pem" > \
+        "/etc/letsencrypt/live/$RT_HOSTNAME/server.pem"
 fi
 
 exec "$@"
