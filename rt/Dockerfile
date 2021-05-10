@@ -97,6 +97,7 @@ RUN chmod +x /entrypoint.sh && \
     ln -s /etc/lighttpd/certs/server.pem /etc/lighttpd/server.pem && \
     chown rt-service:rt-service /etc/lighttpd/certs && \
     chown -R rt-service:rt-service /etc/letsencrypt && \
+    mkdir -p /var/log/letsencrypt && \
     chown -R rt-service:rt-service /var/log/letsencrypt && \
     touch /var/run/lighttpd.pid && \
     chown rt-service:rt-service /var/run/lighttpd.pid && \
