@@ -45,7 +45,7 @@ while ! pg_isready -q -h "$RT_DB_HOST" ; do
     sleep 3
 done
 
-if ! PGPASSWORD="$RT_DB_PASS" psql -h "$RT_DB_HOST" -U "$RT_DB_USER" -lqt | cut -d \| -f 1 | grep -qw "$RT_DB_NAME" ; then
+if ! PGPASSWORD="$RT_PASSWORD" psql -h "$RT_DB_HOST" -U "$RT_USER" -lqt | cut -d \| -f 1 | grep -qw "$RT_DB_NAME" ; then
     echo "Setup database"
     /opt/rt5/sbin/rt-setup-database --dba="$POSTGRES_USER" --dba-password="$POSTGRES_PASSWORD" --action init 
     echo "Database setup done."
