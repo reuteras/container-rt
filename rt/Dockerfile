@@ -78,8 +78,6 @@ COPY entrypoint.sh /entrypoint.sh
 COPY 89-rt.conf /etc/lighttpd/conf-available/89-rt.conf
 
 RUN chmod +x /entrypoint.sh && \
-    sed -i '6 a ssl.ca-file = "/etc/lighttpd/server-chain.pem"' \
-        /etc/lighttpd/conf-available/10-ssl.conf && \
     sed -iE 's/= 80/= 8080/' \
         /etc/lighttpd/lighttpd.conf && \
     sed -iE 's/:443/:8443/' \
@@ -92,10 +90,6 @@ RUN chmod +x /entrypoint.sh && \
     chmod 0770 /opt/rt5/var && \
     chmod 0644 /etc/lighttpd/conf-available/89-rt.conf && \
     chown rt-service:rt-service /etc/lighttpd/conf-available/89-rt.conf && \
-    mkdir /etc/lighttpd/certs && \
-    ln -s /etc/lighttpd/certs/server-chain.pem /etc/lighttpd/server-chain.pem &&  \
-    ln -s /etc/lighttpd/certs/server.pem /etc/lighttpd/server.pem && \
-    chown rt-service:rt-service /etc/lighttpd/certs && \
     chown -R rt-service:rt-service /etc/letsencrypt && \
     mkdir -p /var/log/letsencrypt /var/lib/letsencrypt && \
     chown -R rt-service:rt-service /var/log/letsencrypt /var/lib/letsencrypt && \
