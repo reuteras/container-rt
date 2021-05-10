@@ -9,7 +9,7 @@ ENV GID=1000
 RUN apk add --no-cache \
         certbot \
         dcron && \
-    mkdir -p ${SCRIPT_ROOT}/cron && \
+    mkdir -p ${SCRIPT_ROOT} && \
     addgroup \
         --gid "$GID" \
         "$USER" && \
@@ -27,7 +27,8 @@ RUN apk add --no-cache \
 ADD dcron.sh ${SCRIPT_ROOT}
 ADD certbot.sh /etc/periodic/weekly/certbot
 
-RUN chmod 0755 ${SCRIPT_ROOT}/dcron.sh
+RUN chmod 0755 ${SCRIPT_ROOT}/dcron.sh && \
+    chmod 0755 /usr/sbin/crond
 
 USER "$USER"
 CMD ["/opt/rt/dcron.sh", "-f"]
