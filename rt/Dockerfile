@@ -90,13 +90,14 @@ RUN chmod +x /entrypoint.sh && \
     rm -f /opt/rt5/etc/RT_SiteConfig.pm && \
     ln -s /data/RT_SiteConfig.pm /opt/rt5/etc/RT_SiteConfig.pm && \
     chmod 0770 /opt/rt5/var && \
-    chmod 0775 /etc/lighttpd/conf-available/89-rt.conf && \
+    chmod 0644 /etc/lighttpd/conf-available/89-rt.conf && \
     chown rt-service:rt-service /etc/lighttpd/conf-available/89-rt.conf && \
     mkdir /etc/lighttpd/certs && \
-    chown rt-service:rt-service /etc/lighttpd/certs && \
-    chown -R rt-service:rt-service /etc/letsencrypt && \
     ln -s /etc/lighttpd/certs/server-chain.pem /etc/lighttpd/server-chain.pem &&  \
     ln -s /etc/lighttpd/certs/server.pem /etc/lighttpd/server.pem && \
+    chown rt-service:rt-service /etc/lighttpd/certs && \
+    chown -R rt-service:rt-service /etc/letsencrypt && \
+    chown -R rt-service:rt-service /var/log/letsencrypt && \
     touch /var/run/lighttpd.pid && \
     chown rt-service:rt-service /var/run/lighttpd.pid && \
     chown -R rt-service:rt-service /var/log/lighttpd /var/cache/lighttpd && \
@@ -107,7 +108,6 @@ RUN chmod +x /entrypoint.sh && \
     chown rt-service:rt-service /etc/msmtprc && \
     ln -s /usr/bin/msmtp /usr/sbin/sendmail
 
-EXPOSE 443
 USER rt-service
 ENTRYPOINT ["/entrypoint.sh"]
 
