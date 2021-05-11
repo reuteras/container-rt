@@ -3,8 +3,8 @@ LABEL maintainer="Coding <code@ongoing.today>"
 
 ENV SCRIPT_ROOT=/opt/rt
 ENV USER=rt-service
-ENV UID=1000
-ENV GID=1000
+ENV UID=999
+ENV GID=999
 
 RUN apk add --no-cache \
         certbot \
