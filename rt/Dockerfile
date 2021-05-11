@@ -47,8 +47,6 @@ RUN apt update -yqq && \
         --no-create-home \
         --uid "$UID" \
         "$USER" && \
-#   groupadd -r rt-service && \
-#   useradd -r -g rt-service -G www-data rt-service && \
     mkdir -p /opt/rt5 && \
     chmod 0750 /opt/rt5 && \
     chown rt-service:rt-service /opt/rt5 && \
