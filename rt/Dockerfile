@@ -5,6 +5,9 @@ ENV DEBIAN_FRONTEND noninteractive
 # Perl settings -n to don't to tests
 ENV RT_FIX_DEPS_CMD /usr/bin/cpanm
 ENV PERL_CPANM_OPT -n
+ENV USER=rt-service
+ENV UID=1000
+ENV GID=1000
 
 SHELL ["/bin/bash", "-eo", "pipefail", "-c"]
 RUN apt update -yqq && \
@@ -33,8 +36,19 @@ RUN apt update -yqq && \
         postgresql-client \
         ssl-cert && \
 # Create user and group
-    groupadd -r rt-service && \
-    useradd -r -g rt-service -G www-data rt-service && \
+    addgroup \
+        --gid "$GID" \
+        "$USER" && \
+    adduser \
+        --disabled-password \
+        --gecos "" \
+        --home "$(pwd)" \
+        --ingroup "$USER" \
+        --no-create-home \
+        --uid "$UID" \
+        "$USER" && \
+#   groupadd -r rt-service && \
+#   useradd -r -g rt-service -G www-data rt-service && \
     mkdir -p /opt/rt5 && \
     chmod 0750 /opt/rt5 && \
     chown rt-service:rt-service /opt/rt5 && \
