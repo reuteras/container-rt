@@ -25,7 +25,7 @@ RUN apk add --no-cache \
     chown -R rt-service:rt-service /var/log/letsencrypt /var/lib/letsencrypt
 
 ADD dcron.sh ${SCRIPT_ROOT}
-ADD certbot.sh /etc/periodic/weekly/certbot
+ADD certbot.sh /etc/periodic/daily/certbot
 
 RUN chmod 0755 ${SCRIPT_ROOT}/dcron.sh && \
     chmod 0755 /usr/sbin/crond
