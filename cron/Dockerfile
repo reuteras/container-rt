@@ -8,7 +8,8 @@ ENV GID=1000
 
 RUN apk add --no-cache \
         certbot \
-        dcron && \
+        dcron \
+        postgresql-client && \
     mkdir -p ${SCRIPT_ROOT} && \
     addgroup \
         --gid "$GID" \
