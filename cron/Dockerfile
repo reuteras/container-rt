@@ -23,10 +23,13 @@ RUN apk add --no-cache \
         --uid "$UID" \
         "$USER" && \
     mkdir -p /var/log/letsencrypt /var/lib/letsencrypt && \
-    chown -R rt-service:rt-service /var/log/letsencrypt /var/lib/letsencrypt
+    chown -R rt-service:rt-service /var/log/letsencrypt /var/lib/letsencrypt && \
+    mkdir /backup && \
+    chown rt-service:rt-service /backup
 
 ADD dcron.sh ${SCRIPT_ROOT}
 ADD certbot.sh /etc/periodic/daily/certbot
+ADD pg_backup.sh /etc/periodic/daily/pg_backup
 
 RUN chmod 0755 ${SCRIPT_ROOT}/dcron.sh && \
     chmod 0755 /usr/sbin/crond
