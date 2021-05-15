@@ -1,7 +1,8 @@
 #!/bin/bash
 
 for variable in POSTGRES_USER POSTGRES_PASSWORD RT_DB_HOST RT_USER RT_PASSWORD \
-    RT_DB_NAME RT_DB_PORT RT_HOSTNAME RT_RELAYHOST RT_SENDER RT_DOMAIN RT_CERT_NAME; do
+    RT_DB_NAME RT_DB_PORT RT_HOSTNAME RT_RELAYHOST RT_SENDER RT_DOMAIN  \
+    RT_CERT_NAME CONTAINER_USER; do
     if [[ -z  "${!variable}" ]]; then
         echo >&2 "You must specify \$$variable."
         exit 1
