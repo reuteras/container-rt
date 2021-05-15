@@ -37,4 +37,4 @@ ADD pg_backup.sh /etc/periodic/daily/pg_backup
 RUN chmod 0755 ${SCRIPT_ROOT}/dcron.sh && \
     chmod 0755 /usr/sbin/crond
 
-CMD ["/opt/rt/dcron.sh", "-f", "-L", "/tmp/dcron.log"]
+CMD ["/opt/rt/dcron.sh", "-f"]
