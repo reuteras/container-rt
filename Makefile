@@ -15,7 +15,6 @@ pull:
 clean:
 	docker-compose stop
 	docker-compose rm --force
-	docker volume rm container-rt_db container-rt_app || true
 
 database-upgrade:
 	docker-compose exec -T --user rt-service --workdir /opt/rt5 rt /opt/rt5/sbin/rt-setup-database --action upgrade
@@ -30,3 +29,9 @@ image-rm:
 	docker rmi docker-rt-test
 
 dist-clean: down rm clean image-rm
+
+shell-cron:
+	docker exec -ti container-rt_cron_1 /bin/sh
+
+shell-rt:
+	docker exec -ti container-rt_rt_1 /bin/bash
