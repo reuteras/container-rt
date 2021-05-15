@@ -23,25 +23,16 @@ RUN apk add --no-cache \
         --uid "$UID" \
         "$USER" && \
     mkdir -p /var/log/letsencrypt /var/lib/letsencrypt && \
-    chown -R rt-service:rt-service /var/log/letsencrypt /var/lib/letsencrypt && \
+    chown -R ${USER}:${USER} /var/log/letsencrypt /var/lib/letsencrypt && \
     mkdir /backup && \
-    chown rt-service:rt-service /backup && \
-    touch /var/run/dcron.pid && \
-    chown rt-service:rt-service /var/run/dcron.pid && \
-    mkdir -p /var/spool/cron/cronstamps && \
-    chown -R rt-service:rt-service /var/spool/cron && \
-    chgrp rt-service /usr/bin/crontab && \
-    chmod 4750 /usr/bin/crontab && \
-    cp /etc/crontabs/root /etc/crontabs/rt-service && \
-    chown rt-service:rt-service /etc/crontabs/rt-service /etc/crontabs && \
-    chown -R rt-service:rt-service /etc/periodic/
+    echo "1 1 * * * ${SCRIPT_ROOT}/certbot.sh" | crontab - -u ${USER} && \
+    chown ${USER}:${USER} /backup
 
 ADD dcron.sh ${SCRIPT_ROOT}
-ADD certbot.sh /etc/periodic/daily/certbot
+ADD certbot.sh ${SCRIPT_ROOT}
 ADD pg_backup.sh /etc/periodic/daily/pg_backup
 
 RUN chmod 0755 ${SCRIPT_ROOT}/dcron.sh && \
     chmod 0755 /usr/sbin/crond
 
-USER "$USER"
 CMD ["/opt/rt/dcron.sh", "-f", "-L", "/tmp/dcron.log"]
