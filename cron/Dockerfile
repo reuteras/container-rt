@@ -25,7 +25,9 @@ RUN apk add --no-cache \
     mkdir -p /var/log/letsencrypt /var/lib/letsencrypt && \
     chown -R ${USER}:${USER} /var/log/letsencrypt /var/lib/letsencrypt && \
     mkdir /backup && \
-    echo "1 1 * * * ${SCRIPT_ROOT}/certbot.sh" | crontab - -u ${USER} && \
+    echo "1 1 * * * ${SCRIPT_ROOT}/certbot.sh" > /tmp/new.cron && \
+    crontab -u ${USER} /tmp/new.cron && \
+    rm -f /tmp/new.cron && \
     chown ${USER}:${USER} /backup
 
 ADD dcron.sh ${SCRIPT_ROOT}
