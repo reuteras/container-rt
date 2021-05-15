@@ -25,7 +25,12 @@ RUN apk add --no-cache \
     mkdir -p /var/log/letsencrypt /var/lib/letsencrypt && \
     chown -R rt-service:rt-service /var/log/letsencrypt /var/lib/letsencrypt && \
     mkdir /backup && \
-    chown rt-service:rt-service /backup
+    chown rt-service:rt-service /backup && \
+    touch /var/run/dcron.pid && \
+    chown rt-service:rt-service /var/run/dcron.pid && \
+    mkdir -p /var/spool/cron/cronstamps && \
+    chown -R rt-service:rt-service /var/spool/cron && \
+    chgrp rt-service /usr/bin/crontab
 
 ADD dcron.sh ${SCRIPT_ROOT}
 ADD certbot.sh /etc/periodic/daily/certbot
