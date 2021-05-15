@@ -42,4 +42,4 @@ RUN chmod 0755 ${SCRIPT_ROOT}/dcron.sh && \
     chmod 0755 /usr/sbin/crond
 
 USER "$USER"
-CMD ["/opt/rt/dcron.sh", "-f"]
+CMD ["/opt/rt/dcron.sh", "-f", "-L", "/tmp/dcron.log"]
