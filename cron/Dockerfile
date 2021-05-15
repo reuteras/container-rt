@@ -31,7 +31,8 @@ RUN apk add --no-cache \
     mkdir -p /var/spool/cron/cronstamps && \
     chown -R rt-service:rt-service /var/spool/cron && \
     chgrp rt-service /usr/bin/crontab && \
-    cp /etc/crontabs/root /etc/crontabs/rt-service
+    cp /etc/crontabs/root /etc/crontabs/rt-service && \
+    chown rt-service:rt-service /etc/crontabs/rt-service
 
 ADD dcron.sh ${SCRIPT_ROOT}
 ADD certbot.sh /etc/periodic/daily/certbot
