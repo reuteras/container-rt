@@ -30,9 +30,9 @@ RUN apk add --no-cache \
     rm -f /tmp/new.cron && \
     chown ${USER}:${USER} /backup
 
-ADD dcron.sh ${SCRIPT_ROOT}
-ADD certbot.sh ${SCRIPT_ROOT}
-ADD pg_backup.sh /etc/periodic/daily/pg_backup
+COPY dcron.sh ${SCRIPT_ROOT}
+COPY certbot.sh ${SCRIPT_ROOT}
+COPY pg_backup.sh /etc/periodic/daily/pg_backup
 
 RUN chmod 0755 ${SCRIPT_ROOT}/dcron.sh && \
     chmod 0755 /usr/sbin/crond
