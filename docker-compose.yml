@@ -15,7 +15,6 @@ services:
     env_file:
       - rt/.env
     ports:
-      - "80:8080"
       - "443:8443"
     volumes:
       - ./rt/files:/data:ro
@@ -30,6 +29,8 @@ services:
     restart: unless-stopped
     env_file:
       - rt/.env
+    ports:
+      - "80:8080"
     volumes:
       - cert:/etc/letsencrypt
       - backup:/backup
