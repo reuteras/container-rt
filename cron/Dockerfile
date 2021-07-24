@@ -7,7 +7,9 @@ ENV UID=1000
 ENV GID=1000
 
 RUN apk add --no-cache \
+        bind-tools \
         certbot \
+        curl \
         dcron \
         postgresql-client && \
     mkdir -p ${SCRIPT_ROOT} && \
