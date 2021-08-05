@@ -27,13 +27,11 @@ RUN apk add --no-cache \
     mkdir -p /var/log/letsencrypt /var/lib/letsencrypt && \
     chown -R ${USER}:${USER} /var/log/letsencrypt /var/lib/letsencrypt && \
     mkdir /backup && \
-    echo "1 1 * * * ${SCRIPT_ROOT}/certbot.sh" > /tmp/new.cron && \
-    crontab -u ${USER} /tmp/new.cron && \
-    rm -f /tmp/new.cron && \
     chown ${USER}:${USER} /backup
 
 COPY dcron.sh ${SCRIPT_ROOT}
-COPY certbot.sh ${SCRIPT_ROOT}
+COPY certbot.sh /etc/periodic/daily/certbot
+COPY certfix.sh /etc/periodic/15min/certfix
 COPY pg_backup.sh /etc/periodic/daily/pg_backup
 
 RUN chmod 0755 ${SCRIPT_ROOT}/dcron.sh && \
