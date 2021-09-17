@@ -51,7 +51,7 @@ RUN apt update -yqq && \
     chmod 0750 /opt/rt5 && \
     chown rt-service:rt-service /opt/rt5 && \
     mkdir -p /tmp/rt && \
-    cufl -SL https://download.bestpractical.com/pub/rt/release/rt-5.0.2.tar.gz | \
+    curl -SL https://download.bestpractical.com/pub/rt/release/rt-5.0.2.tar.gz | \
         tar -xzC /tmp/rt && \
     cd /tmp/rt/rt* && \
     (echo y; echo o conf prerequisites_policy follow; echo o conf commit) | perl -MCPAN -e shell && \
