@@ -18,6 +18,12 @@ Runs the RT instance.
 
 Postgres database.
 
+To update database when a new version is installed:
+
+    cd container-rt/
+    docker-compose exec rt /bin/bash
+    /opt/rt5/sbin/rt-setup-database --action upgrade --prompt-for-dba-password
+
 ### cron
 
 Runs scripts to:
