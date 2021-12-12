@@ -44,3 +44,7 @@ Runs scripts to:
 - [Full text indexing](https://docs.bestpractical.com/rt/5.0.1/full_text_indexing.html)
 - Backups? https://docs.bestpractical.com/rt/5.0.1/system_administration/database.html
 - [Automation](https://docs.bestpractical.com/rt/5.0.1/automating_rt.html) like running [rt-crontool](https://docs.bestpractical.com/rt/5.0.1/rt-crontool.html)?
+
+## Changelog
+
+- 2021-12-12: Add logging to lighttpd.
