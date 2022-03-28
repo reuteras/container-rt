@@ -71,7 +71,7 @@ RUN apt update -yqq && \
     make fixdeps && \
     make testdeps && \
     make config-install dirs files-install fixperms instruct && \
-    cpanm git://github.com/gbarr/perl-TimeDate.git && \
+    cpanm https://github.com/gbarr/perl-TimeDate.git && \
     cpanm RT::Extension::TerminalTheme && \
 # Clean up
     apt remove -y git cpanminus build-essential && \
