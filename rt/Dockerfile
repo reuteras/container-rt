@@ -29,6 +29,7 @@ RUN apt update -yqq && \
         libgd-dev \
         libssl-dev \
         lighttpd \
+        lighttpd-mod-openssl \
         mailutils \
         msmtp \
         openssl \
