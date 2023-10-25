@@ -1,4 +1,4 @@
-FROM alpine:3.13
+FROM alpine:3.18
 LABEL maintainer="Coding <code@ongoing.today>"
 
 ENV SCRIPT_ROOT=/opt/rt
